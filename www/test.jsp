@@ -32,7 +32,7 @@
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
 
-		pw.println("<table class=\"bordered-table zebra-striped\">");
+		pw.println("<table class=\"table table-bordered table-striped bordered-table zebra-striped\" style=\"width:auto;\">");
 		pw.println("\t<tbody>");
 
 		pw.println("\t\t<tr>");
@@ -115,10 +115,10 @@
 
 		if (p != null)
 		{
-			pw.println("<table class=\"bordered-table zebra-striped\">");
+			pw.println("<table class=\"table table-bordered table-striped bordered-table zebra-striped\">");
 			pw.println("\t<thead>");
 			pw.println("\t\t<tr>");
-			pw.println("\t\t\t<th>Test</th>");
+			pw.println("\t\t\t<th style=\"text-align:center\">Test</th>");
 			pw.println("\t\t\t<th>Target String</th>");
 			pw.println("\t\t\t<th>matches()</th>");
 			pw.println("\t\t\t<th>replaceFirst()</th>");

@@ -1,14 +1,6 @@
 <%@ page contentType="text/plain;charset=utf-8"
-		 import="java.io.*,
-				 java.util.*,
-				 java.util.regex.*,
-				 org.json.simple.*,
-				 com.google.common.base.*,
-				 org.apache.commons.lang3.*,
-				 org.apache.commons.lang3.math.*"
+		 import="org.json.simple.*"
 %><%
-
-	Locale loc = request.getLocale();
 
 	JSONObject retVal = new JSONObject();
 
