@@ -8,6 +8,15 @@
 				 org.apache.commons.lang3.math.*"
 %><%
 
+	response.setHeader("Access-Control-Allow-Origin", "*"); //"http://www.regexplanet.com");
+	response.setHeader("Access-Control-Allow-Methods", "POST, GET");
+	response.setHeader("Access-Control-Max-Age", Integer.toString(60 * 60 * 24 * 7));
+	if (request.getMethod().equalsIgnoreCase("options"))
+	{
+		out.print("yes, CORS is allowed!");
+		return;
+	}
+
 	Locale loc = request.getLocale();
 
 	JSONObject retVal = new JSONObject();
