@@ -2,7 +2,7 @@
 
 	<application>regexplanet-java</application>
 
-	<sessions-enabled>true</sessions-enabled>
+	<sessions-enabled>false</sessions-enabled>
 
 	<!--
 	<static-error-handlers>
