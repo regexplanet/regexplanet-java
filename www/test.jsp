@@ -82,8 +82,8 @@
 
 		int flags = 0;
 		if (options.contains("canon")) { flags |= Pattern.CANON_EQ; }
-		if (options.contains("insensitive")) { flags |= Pattern.CASE_INSENSITIVE; }
-		if (options.contains("comments")) { flags |= Pattern.COMMENTS; }
+		if (options.contains("ignorecase")) { flags |= Pattern.CASE_INSENSITIVE; }
+		if (options.contains("comment")) { flags |= Pattern.COMMENTS; }
 		if (options.contains("dotall")) { flags |= Pattern.DOTALL; }
 		if (options.contains("multiline")) { flags |= Pattern.MULTILINE; }
 		if (options.contains("unicode")) { flags |= Pattern.UNICODE_CASE; }
