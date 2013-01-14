@@ -6,7 +6,7 @@
 
 	retVal.put("success", Boolean.TRUE);
 	retVal.put("message", "OK");
-	retVal.put("version", System.getProperty("java.version"));
+	retVal.put("version", System.getProperty("java.vm.name", "Unknown VM") + " v" + System.getProperty("java.version", "Unknown"));
 	retVal.put("java.vendor", System.getProperty("java.vendor"));
 	retVal.put("java.version", System.getProperty("java.version"));
 	retVal.put("java.specification.version", System.getProperty("java.specification.version"));
