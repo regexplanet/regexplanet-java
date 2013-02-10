@@ -105,6 +105,7 @@
 			pw.print(StringEscapeUtils.escapeHtml4(e.getMessage()));
 			pw.println("</td>");
 			pw.println("\t\t</tr>");
+			retVal.put("message", e.getMessage());
 		}
 		int groupCount = 0;
 
@@ -122,7 +123,11 @@
 		pw.println("</table>");
 
 
-		if (p != null)
+		if (p == null)
+		{
+			retVal.put("success", Boolean.FALSE);
+		}
+		else
 		{
 			pw.println("<table class=\"table table-bordered table-striped bordered-table zebra-striped\">");
 			pw.println("\t<thead>");
@@ -257,11 +262,10 @@
 			pw.println("\t</tbody>");
 			pw.println("</table>");
 
-			pw.close();
-
 			retVal.put("success", Boolean.TRUE);
-			retVal.put("html", sw.toString());
 		}
+		pw.close();
+		retVal.put("html", sw.toString());
 	}
 
 	String json = retVal.toString();
