@@ -99,11 +99,9 @@
 		{
 			pw.println("\t\t<tr>");
 			pw.println("\t\t\t<td>Compile error</td>");
-			pw.print("\t\t\t<td>");
-			//ImgUtil.appendIcon(out, "stop", "error");
-			pw.print(' ');
+			pw.print("\t\t\t<td><pre>");
 			pw.print(StringEscapeUtils.escapeHtml4(e.getMessage()));
-			pw.println("</td>");
+			pw.println("</pre></td>");
 			pw.println("\t\t</tr>");
 			retVal.put("message", e.getMessage());
 		}
