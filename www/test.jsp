@@ -1,5 +1,6 @@
 <%@ page contentType="text/plain;charset=utf-8"
 		 import="java.io.*,
+		 		 java.text.*,
 				 java.util.*,
 				 java.util.regex.*,
 				 org.json.simple.*,
@@ -30,6 +31,7 @@
 		options.addAll(Arrays.asList(ArrOption));
 	}
 	String[] ArrInput = request.getParameterValues("input");
+	int timeoutMillis = 10 * 1000;
 
 	if (Strings.isNullOrEmpty(regex))
 	{
@@ -164,18 +166,40 @@
 				pw.print(StringEscapeUtils.escapeHtml4(test));
 				pw.println("</td>");
 
-				Matcher m = p.matcher(test);
+				Matcher m = null;
+				boolean matches, lookingAt;
+				String replaceFirst, replaceAll;
+
+				try
+				{
+					m = p.matcher(new TimeoutCharSequence(test, timeoutMillis));
+					matches = m.matches();
+					m.reset();
+					replaceFirst = m.replaceFirst(replacement);
+					m.reset();
+					replaceAll = m.replaceAll(replacement);
+					m.reset();
+					lookingAt = m.lookingAt();
+				}
+				catch (Exception e)
+				{
+					pw.print("\t\t\t<td class=\"text-error\" colspan=\"6\">");
+					pw.print("ERROR: ");
+					pw.print(StringEscapeUtils.escapeHtml4(e.getMessage()));
+					pw.println("</td>");
+					pw.println("\t\t</tr>");
+					continue;
+				}
 
 				pw.print("\t\t\t<td>");
-				pw.print(StringEscapeUtils.escapeHtml4(booleanToString(m.matches(), loc)));
+				pw.print(StringEscapeUtils.escapeHtml4(booleanToString(matches, loc)));
 				pw.println("</td>");
 
-				m.reset();
 
 				pw.print("\t\t\t<td>");
 				try
 				{
-					pw.print(StringEscapeUtils.escapeHtml4(m.replaceFirst(replacement)));
+					pw.print(StringEscapeUtils.escapeHtml4(replaceFirst));
 				}
 				catch (Exception e)
 				{
@@ -189,22 +213,11 @@
 				m.reset();
 
 				pw.print("\t\t\t<td>");
-				try
-				{
-					pw.print(StringEscapeUtils.escapeHtml4(m.replaceAll(replacement)));
-				}
-				catch (Exception e)
-				{
-					pw.print("<i>(ERROR: ");
-					pw.print(StringEscapeUtils.escapeHtml4(e.getMessage()));
-					pw.print(")</i>");
-				}
+				pw.print(StringEscapeUtils.escapeHtml4(replaceAll));
 				pw.println("</td>");
 
-				m.reset();
-
 				pw.print("\t\t\t<td>");
-				pw.print(StringEscapeUtils.escapeHtml4(booleanToString(m.lookingAt(), loc)));
+				pw.print(StringEscapeUtils.escapeHtml4(booleanToString(lookingAt, loc)));
 				pw.println("</td>");
 
 				m.reset();
@@ -299,6 +312,47 @@
 		}
 
 		return false;
+	}
+
+	class TimeoutCharSequence
+		implements CharSequence
+	{
+		private final CharSequence inner;
+		private final int timeoutMillis;
+		private final long timeoutTime;
+
+		public TimeoutCharSequence(CharSequence inner, int timeoutMillis)
+		{
+			super();
+			this.inner = inner;
+			this.timeoutMillis = timeoutMillis;
+			timeoutTime = System.currentTimeMillis() + timeoutMillis;
+		}
+
+		public char charAt(int index)
+		{
+			if (System.currentTimeMillis() > timeoutTime)
+			{
+				throw new RuntimeException(MessageFormat.format("Interrupted after {0}ms", timeoutMillis));
+			}
+			return inner.charAt(index);
+		}
+
+		public int length()
+		{
+			return inner.length();
+		}
+
+		public CharSequence subSequence(int start, int end)
+		{
+			return new TimeoutCharSequence(inner.subSequence(start, end), timeoutMillis);
+		}
+
+		@Override
+		public String toString()
+		{
+			return inner.toString();
+		}
 	}
 %>
 
