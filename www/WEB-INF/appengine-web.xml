@@ -2,6 +2,8 @@
 
 	<application>regexplanet-java</application>
 
+	<runtime>java8</runtime>
+
 	<sessions-enabled>false</sessions-enabled>
 
 	<!--
@@ -22,6 +24,6 @@
 
 	<threadsafe>true</threadsafe>
 
-	<version>3</version>
+	<version>4</version>
 
 </appengine-web-app>
