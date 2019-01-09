@@ -17,6 +17,16 @@
 		<location>/_err/500.jsp</location>
 	</error-page>
 
+	<servlet>
+    	<servlet-name>StatusJson</servlet-name>
+    	<jsp-file>/status.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+    	<servlet-name>StatusJson</servlet-name>
+    	<url-pattern>/status.json</url-pattern>
+	</servlet-mapping>
+
 	<system-properties>
 		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
 	</system-properties>
