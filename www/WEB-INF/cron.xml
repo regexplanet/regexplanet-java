@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<cronentries>
-	<cron>
-		<url>/session-cleanup.jsp?num=5000</url>
-		<description>Daily session purge job</description>
-		<schedule>every day 02:30</schedule>
-		<timezone>America/New_York</timezone>
-	</cron>
-</cronentries>

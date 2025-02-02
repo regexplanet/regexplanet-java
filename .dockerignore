@@ -1,0 +1,8 @@
+.DS_Store
+.editorconfig
+.git
+.github
+*.md
+*.sh
+*.tmp
+tmp*
