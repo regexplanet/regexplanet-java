@@ -9,6 +9,7 @@ set -o nounset
 
 if false ; then
 docker run \
+	--plain \
 	--detach \
 	--name regexplanet-java \
 	--publish 4000:8080 \

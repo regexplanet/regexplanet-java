@@ -13,4 +13,6 @@ USER jetty
 # why the f*** isn't in the Dockerfile README???
 RUN java -jar "$JETTY_HOME/start.jar" --add-modules=ee10-webapp,ee10-deploy,ee10-jsp,ee10-jstl,ee10-websocket-jetty,ee10-websocket-jakarta
 
+RUN java -jar "$JETTY_HOME/start.jar" --list-modules
+
 COPY ./www /var/lib/jetty/webapps/ROOT
