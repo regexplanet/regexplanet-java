@@ -1,8 +1,10 @@
+*.class
 .DS_Store
 .editorconfig
-.git
-.github
+*.env
+*.log
 *.md
 *.sh
-*.tmp
+./target
 tmp*
+*.tmp

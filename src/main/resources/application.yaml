@@ -1,0 +1,3 @@
+# remap PORT to SERVER_PORT
+server:
+  port: ${PORT:4000}

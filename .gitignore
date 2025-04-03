@@ -13,6 +13,7 @@ node_modules/
 *.pyc
 .sass-cache/
 _site/
+target
 tmp/
 _tmp/
 *.tgz

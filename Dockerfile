@@ -1,18 +1,17 @@
-# this one makes 352 MB image
-#FROM jetty:12-jre21-eclipse-temurin
-# this one makes a 271 MB image
-FROM jetty:12-jre21-alpine
+FROM maven:3.9.9-eclipse-temurin-21 AS builder
 
-ARG COMMIT=(not set)
-ARG LASTMOD=(not set)
-ENV COMMIT=$COMMIT
-ENV LASTMOD=$LASTMOD
+WORKDIR /app
+COPY pom.xml /app
 
-USER jetty
+RUN mvn dependency:go-offline
 
-# why the f*** isn't in the Dockerfile README???
-RUN java -jar "$JETTY_HOME/start.jar" --add-modules=ee10-webapp,ee10-deploy,ee10-jsp,ee10-jstl,ee10-websocket-jetty,ee10-websocket-jakarta
+COPY . /app
+RUN mvn package
 
-RUN java -jar "$JETTY_HOME/start.jar" --list-modules
 
-COPY ./www /var/lib/jetty/webapps/ROOT
+FROM gcr.io/distroless/java21-debian12
+
+COPY --from=builder /app/target/regexplanet-1.0.jar /app/regexplanet-1.0.jar
+
+WORKDIR /app
+CMD ["regexplanet-1.0.jar"]

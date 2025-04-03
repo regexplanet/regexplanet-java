@@ -1,5 +1,0 @@
-#
-# just a backend for the main RegexPlanet.com site: go there to index stuff!
-#
-User-agent: *
-Disallow: /
