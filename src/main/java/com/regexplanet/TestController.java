@@ -13,7 +13,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.HtmlUtils;
 
@@ -44,7 +45,7 @@ public class TestController {
 	}
 
 
-	@GetMapping("/test.json")
+    @RequestMapping(value = "/test.json", method = {RequestMethod.GET, RequestMethod.POST})
 	public void handle(jakarta.servlet.http.HttpServletResponse resp,
 			@RequestParam(required = false) String regex,
 			@RequestParam(required = false) String replacement,
