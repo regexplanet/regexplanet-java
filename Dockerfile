@@ -10,8 +10,16 @@ RUN mvn package
 
 
 FROM gcr.io/distroless/java21-debian12
+ARG COMMIT="(not set)"
+ARG LASTMOD="(not set)"
+ENV COMMIT=$COMMIT
+ENV LASTMOD=$LASTMOD
+
+WORKDIR /app
 
 COPY --from=builder /app/target/regexplanet-1.0.jar /app/regexplanet-1.0.jar
 
-WORKDIR /app
+USER nonroot
+EXPOSE 4000
+ENV PORT=4000
 CMD ["regexplanet-1.0.jar"]
