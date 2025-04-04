@@ -1,17 +1,15 @@
 package com.regexplanet;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Controller
@@ -22,7 +20,7 @@ public class StatusController {
 			throws IOException {
 
 		// Create a JSON response
-		Map<String, Object> retVal = new HashMap<>();
+		Map<String, Object> retVal = new LinkedHashMap<>();
 		retVal.put("success", Boolean.TRUE);
 		retVal.put("message", "OK");
 		retVal.put("commit", System.getenv("COMMIT"));
@@ -42,26 +40,6 @@ public class StatusController {
 		retVal.put("java.vm.name", System.getProperty("java.vm.name"));
 		retVal.put("file.encoding", System.getProperty("file.encoding"));
 
-		// Convert the map to JSON using Jackson
-		ObjectMapper objectMapper = new ObjectMapper();
-		String jsonResponse = objectMapper.writeValueAsString(retVal);
-
-		// Write the JSON response
-		if (callback != null && callback.matches("^[a-zA-Z_][a-zA-Z0-9_]*$")) {
-			resp.setContentType("application/javascript");
-			resp.setCharacterEncoding("UTF-8");
-			PrintWriter writer = resp.getWriter();
-			writer.write(callback);
-			writer.write("(");
-			writer.write(jsonResponse);
-			writer.write(");");
-		} else {
-			resp.setHeader("Access-Control-Allow-Origin", "*");
-			resp.setHeader("Access-Control-Allow-Methods", "GET, POST");
-			resp.setHeader("Access-Control-Max-Age", "604800");
-			resp.setContentType("application/json");
-			resp.setCharacterEncoding("UTF-8");
-			resp.getWriter().write(jsonResponse);
-		}
+		HandleJsonp.handleJsonp(resp, callback, retVal);
 	}
 }
